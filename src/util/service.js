@@ -1,6 +1,6 @@
 import axios from "axios"
 import qs from "qs"
-const HOST = "http://kaaden.orrzt.com"
+const HOST = "http://kaaden.orrzt.com/"
 // const HOST = "http://127.0.0.1:80/"
 const addr = {
     bing: HOST + "getBing",

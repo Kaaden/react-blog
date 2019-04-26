@@ -1,6 +1,6 @@
 import styles from "./index.css"
 import { Icon } from "antd"
-const Page = ({ config }) => {
+const Head = ({ config }) => {
     let desc = ""
     let title = "KAADEN"
     let bg = "http://kaaden.orrzt.com/public/uploads/8c23f4a2b2baf68c6c6c020542696629.jpg"
@@ -26,4 +26,4 @@ const Page = ({ config }) => {
 }
 
 
-export default Page
+export default Head

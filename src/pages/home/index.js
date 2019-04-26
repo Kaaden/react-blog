@@ -1,7 +1,6 @@
 import { connect } from "dva"
 import { Component } from "react"
-import Head from '../../components/components-head'
-import List from '../../components/components-list'
+import { Head, List } from "../../components"
 class Index extends Component {
   state = {}
   componentDidMount() {
@@ -13,7 +12,7 @@ class Index extends Component {
       <div className="container">
         <Head config={headConfig} />
         <div className="container-main">
-         <List/>
+          <List />
         </div>
       </div>
     )
