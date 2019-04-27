@@ -31,12 +31,7 @@ class List extends Component {
         this.setState({ loading: false })
         fetch = false
     }
-    changeData = (scrollTop) => {
-        const { dispatch } = this.props
-        const headBg = document.getElementById("top-nav")
-        const bgHeight = headBg ? headBg.clientHeight : 0;
-        dispatch({ type: "global/change_Show", payload: scrollTop >= bgHeight ? true : false })
-    }
+
     onScroll = (e) => {
         const body = document.documentElement;
         const scrollTop = body.scrollTop;
@@ -45,7 +40,6 @@ class List extends Component {
             let { pageindex } = this.props
             this.getData(pageindex + 1)
         }
-        this.changeData(scrollTop)
     }
     goDetail = (id) => {
         router.push(`/detail?id=${id}`)

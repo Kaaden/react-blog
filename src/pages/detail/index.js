@@ -2,7 +2,7 @@ import { connect } from "dva"
 import { Component } from "react"
 import styles from "./index.css"
 import { Navigator } from "../../components"
-import { Skeleton, Spin, Avatar, Icon } from "antd"
+import { Skeleton, BackTop, Spin, Avatar, Icon } from "antd"
 class Index extends Component {
   state = { id: "", loading: false }
   componentDidMount() {
@@ -43,7 +43,7 @@ class Index extends Component {
 
 
 const TitleComponents = ({ detail }) => (
-  <div id="head-bg" className={styles.main} style={{ backgroundImage: `url(${detail.img})` }}>
+  <div id="top-nav" className={styles.main} style={{ backgroundImage: `url(${detail.img})` }}>
     <div className={styles.mask}></div>
     <div className={styles.mainContent}>
       <div className={styles.mainTop}>
@@ -52,6 +52,9 @@ const TitleComponents = ({ detail }) => (
       </div>
       <div className={styles.mainCategory}>{detail.category}</div>
       <div className={styles.mainTime}>{detail.time}</div>
+    </div>
+    <div>
+      <BackTop />
     </div>
   </div>
 )
