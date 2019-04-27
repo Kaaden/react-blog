@@ -9,7 +9,8 @@ export default {
     headConfig: "",
     pageList: [],
     hasMore: true,
-    introduct: ""
+    introduct: "",
+    tags: []
   },
   reducers: {
     save_Config(state, { payload }) {
@@ -29,6 +30,9 @@ export default {
     },
     save_Introduct(state, { payload }) {
       return { ...state, introduct: payload }
+    },
+    save_Tag(state, { payload }) {
+      return { ...state, tags: payload }
     }
   },
   effects: {
@@ -58,6 +62,24 @@ export default {
           type: "save_Introduct",
           payload: data.data
         })
+      }
+    },
+    * getTag({ _ }, { call, put }) {
+      const { data } = yield call(service.request, ({ url: "tag" }))
+      if (data && data.isok) {
+        yield put({
+          type: "save_Tag",
+          payload: data.data
+        })
+      }
+    },
+    * updateView({ _ }, { call }) {
+      const isView = window.localStorage.getItem("isView")
+      if (!isView) {
+        const { data } = yield call(service.request, ({ url: "updateView" }))
+        if (data && data.isok) {
+          window.localStorage.setItem("isView", "1")
+        }
       }
     }
 

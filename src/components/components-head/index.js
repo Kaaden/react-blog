@@ -4,7 +4,10 @@ import { connect } from "dva"
 import { Component } from "react"
 class Head extends Component {
     componentDidMount() {
-        this.props.dispatch({ type: "global/getconfig" })
+        const { headConfig, dispatch } = this.props
+        if (!headConfig) {
+            dispatch({ type: "global/getconfig" })
+        }
     }
     onPage = () => {
         document.documentElement.scrollTop = document.getElementById("top-nav").clientHeight - 100;
@@ -14,12 +17,12 @@ class Head extends Component {
         let desc = ""
         let title = "KAADEN"
         let bg = "http://kaaden.orrzt.com/public/uploads/8c23f4a2b2baf68c6c6c020542696629.jpg"
-        const url = window.location.pathname
-        if (url.includes("/")) {
+        const url = window.location.hash
+        if (url === "#/") {
             bg = headConfig.homeurl
             title = headConfig.hometitle
             desc = headConfig.homelevel
-        } else if (url.includes("about")) {
+        } else if (url === "#/about") {
             bg = headConfig.aboutImg
             title = headConfig.aboutitle
             desc = headConfig.aboutlevel

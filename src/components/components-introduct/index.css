@@ -41,3 +41,34 @@
     color: #24292e;
     font-size: .14rem;
 }
+
+.mainItemBottom {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: .2rem;
+}
+
+.iconItem {
+    color: #9EABB3;
+    margin-right: 0.3rem;
+    cursor: pointer;
+    font-size: 0.28rem;
+}
+
+.iconItem:hover {
+    color: #1890ff
+}
+
+.mainItemTile {
+    font-size: 0.22rem;
+    font-weight: 600;
+}
+
+.mainItemtag {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: .1rem 0;
+}

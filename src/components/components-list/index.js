@@ -6,15 +6,17 @@ import LazyLoad from 'react-lazyload';
 import placeImg from '../../assets/pic.png'
 import Ellipsis from 'ant-design-pro/lib/Ellipsis';
 class List extends Component {
-    state = { loading: false, skele: true, pageindex: 1 }
+    state = { loading: false, skele: false, pageindex: 1 }
     async componentDidMount() {
         window.addEventListener("scroll", this.onScroll)
-        this.setState({ skele: true })
-        await this.getData(1)
-        this.setState({ skele: false })
+        if (!this.props.pageList.length) {
+            this.setState({ skele: true })
+            await this.getData(1)
+            this.setState({ skele: false })
+        }
     }
     componentWillUnmount() {
-        window.addEventListener("scroll", this.onScroll)
+        window.removeEventListener("scroll", this.onScroll)
     }
     getData = async (pageindex) => {
         const { dispatch, hasMore } = this.props
@@ -39,7 +41,7 @@ class List extends Component {
         const { pageList } = this.props
         return (
             <div id="page-list" className={styles.main}>
-             
+
                 <Skeleton active loading={skele}>
                     {pageList.length > 0 && pageList.map((item, index) => (
                         <div className={styles.mainItem} key={index}>
