@@ -63,6 +63,7 @@ a, a:link, a:active, a:visited {
   margin: .3rem auto;
   display: flex;
   position: relative;
+  justify-content: space-between;
 }
 
 .spin-loading {

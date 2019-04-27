@@ -9,6 +9,7 @@ export default {
     headConfig: "",
     pageList: [],
     hasMore: true,
+    introduct: ""
   },
   reducers: {
     save_Config(state, { payload }) {
@@ -25,6 +26,9 @@ export default {
         list = [...list, ...payload.list]
       }
       return { ...state, pageList: list, hasMore }
+    },
+    save_Introduct(state, { payload }) {
+      return { ...state, introduct: payload }
     }
   },
   effects: {
@@ -44,6 +48,15 @@ export default {
         yield put({
           type: "save_List",
           payload: { list: data.data, hasMore: data.isok }
+        })
+      }
+    },
+    * getIntroduct({ _ }, { call, put }) {
+      const { data } = yield call(service.request, ({ url: "user" }))
+      if (data && data.isok) {
+        yield put({
+          type: "save_Introduct",
+          payload: data.data
         })
       }
     }

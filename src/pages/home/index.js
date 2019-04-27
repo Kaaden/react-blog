@@ -1,6 +1,6 @@
 import { connect } from "dva"
 import { Component } from "react"
-import { Head, List, Navigator } from "../../components"
+import { Head, List, Navigator, Introduct } from "../../components"
 class Index extends Component {
   state = {}
   componentDidMount() {
@@ -12,6 +12,7 @@ class Index extends Component {
         <Head />
         <div className="container-main">
           <List />
+          <Introduct />
         </div>
       </div>
     )
