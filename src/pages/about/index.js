@@ -1,6 +1,6 @@
 import { connect } from "dva"
 import { Component } from "react"
-import { Head, Navigator, Introduct } from "../../components"
+import { Head, Navigator, Introduct ,Footer} from "../../components"
 import styles from "./index.css"
 import { Skeleton } from "antd"
 class Index extends Component {
@@ -44,6 +44,7 @@ class Index extends Component {
                     </Skeleton>
                     <Introduct />
                 </div>
+                <Footer/>
             </div >
         )
     }

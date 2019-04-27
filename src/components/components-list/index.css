@@ -54,7 +54,7 @@
 }
 
 .mainItemImg {
-    width: 2rem;
+    width: 2rem !important;
     height: 1.5rem;
     flex-shrink: 0;
     margin-left: 0.3rem;

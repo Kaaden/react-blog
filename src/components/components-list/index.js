@@ -10,7 +10,6 @@ let fetch = false
 class List extends Component {
     state = { loading: false, skele: false, pageindex: 1 }
     async componentDidMount() {
-        console.log(1)
         window.addEventListener("scroll", this.onScroll)
         if (!this.props.pageList.length) {
             this.setState({ skele: true })
@@ -44,7 +43,6 @@ class List extends Component {
         const scrollBottom = body.scrollHeight - body.clientHeight;
         if (scrollTop >= scrollBottom) {
             let { pageindex } = this.props
-            console.log(pageindex)
             this.getData(pageindex + 1)
         }
         this.changeData(scrollTop)
@@ -57,30 +55,32 @@ class List extends Component {
         const { pageList } = this.props
         return (
             <div id="page-list" className={styles.main}>
+                <div>
 
-                <Skeleton active loading={skele}>
-                    {pageList.length > 0 && pageList.map((item, index) => (
-                        <div className={styles.mainItem} key={index} onClick={() => this.goDetail(item.id)}>
-                            <div className={styles.mainItemContent}>
-                                <Ellipsis length={25} className={styles.mainItemTitle}>{item.title}</Ellipsis>
-                                <Ellipsis length={100} className={styles.mainItemTxt}>{item.description}</Ellipsis>
-                                <div className={styles.mainItemOrther}>
-                                    <Tag color="#108ee9">{item.category}</Tag>
-                                    <Divider type="vertical" />
-                                    <span>{item.authors}</span>
-                                    <Divider type="vertical" />
-                                    <span>{item.time}</span>
+                    <Skeleton active loading={skele}>
+                        {pageList.length > 0 && pageList.map((item, index) => (
+                            <div className={styles.mainItem} key={index} onClick={() => this.goDetail(item.id)}>
+                                <div className={styles.mainItemContent}>
+                                    <Ellipsis length={25} className={styles.mainItemTitle}>{item.title}</Ellipsis>
+                                    <Ellipsis length={100} className={styles.mainItemTxt}>{item.description}</Ellipsis>
+                                    <div className={styles.mainItemOrther}>
+                                        <Tag color="#108ee9">{item.category}</Tag>
+                                        <Divider type="vertical" />
+                                        <span>{item.authors}</span>
+                                        <Divider type="vertical" />
+                                        <span>{item.time}</span>
+                                    </div>
                                 </div>
+                                <LazyLoad height={200} offset={100}>
+                                    <img src={item.img} alt="" className={styles.mainItemImg} onError={(e) => e.target.src = placeImg} />
+                                </LazyLoad>
                             </div>
-                            <LazyLoad height={200} offset={100}>
-                                <img src={item.img} alt="" className={styles.mainItemImg} onError={(e) => e.target.src = placeImg} />
-                            </LazyLoad>
-                        </div>
-                    ))}
-                    <div className="spin-loading">
-                        <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} />} spinning={loading} />
-                    </div>
-                </Skeleton>
+                        ))}
+                    </Skeleton>
+                </div>
+                <div className="spin-loading">
+                    <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} />} spinning={loading} />
+                </div>
             </div>
         )
     }
