@@ -1,16 +1,15 @@
 import { connect } from "dva"
 import { Component } from "react"
-import { Head, List } from "../../components"
+import { Head, List, Navigator } from "../../components"
 class Index extends Component {
   state = {}
   componentDidMount() {
-    this.props.dispatch({ type: "global/getconfig" })
   }
   render() {
-    const { headConfig } = this.props
     return (
       <div className="container">
-        <Head config={headConfig} />
+        <Navigator />
+        <Head />
         <div className="container-main">
           <List />
         </div>
@@ -19,9 +18,6 @@ class Index extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { headConfig } = state.global
-  return { headConfig }
-}
 
-export default connect(mapStateToProps)(Index)
+
+export default connect()(Index)

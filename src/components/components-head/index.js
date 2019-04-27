@@ -1,29 +1,49 @@
 import styles from "./index.css"
-import { Icon } from "antd"
-const Head = ({ config }) => {
-    let desc = ""
-    let title = "KAADEN"
-    let bg = "http://kaaden.orrzt.com/public/uploads/8c23f4a2b2baf68c6c6c020542696629.jpg"
-    const url = window.location.pathname
-    if (url.includes("/")) {
-        bg = config.homeurl
-        title = config.hometitle
-        desc = config.homelevel
-    } else if (url.includes("about")) {
-        bg = config.aboutImg
-        title = config.aboutitle
-        desc = config.aboutlevel
+import { Icon, BackTop } from "antd"
+import { connect } from "dva"
+import { Component } from "react"
+class Head extends Component {
+    componentDidMount() {
+        this.props.dispatch({ type: "global/getconfig" })
     }
-    return (
-        <div id="top-nav" className={styles.main} style={{ backgroundImage: `url(${bg})` }}>
-            <div className={styles.mainTitle}>
-                <div>{title}</div>
-                <div>{desc}</div>
+    onPage = () => {
+        document.documentElement.scrollTop = document.getElementById("top-nav").clientHeight - 100;
+    }
+    render() {
+        const { headConfig } = this.props
+        let desc = ""
+        let title = "KAADEN"
+        let bg = "http://kaaden.orrzt.com/public/uploads/8c23f4a2b2baf68c6c6c020542696629.jpg"
+        const url = window.location.pathname
+        if (url.includes("/")) {
+            bg = headConfig.homeurl
+            title = headConfig.hometitle
+            desc = headConfig.homelevel
+        } else if (url.includes("about")) {
+            bg = headConfig.aboutImg
+            title = headConfig.aboutitle
+            desc = headConfig.aboutlevel
+        }
+        return (
+            <div id="top-nav" className={styles.main} style={{ backgroundImage: `url(${bg})` }}>
+                <div className={styles.mainTitle}>
+                    <div>{title}</div>
+                    <div>{desc}</div>
+
+                </div>
+                <Icon type="down" className={styles.mainIcon} onClick={this.onPage} />
+                <div>
+                    <BackTop />
+                </div>
             </div>
-            <Icon type="down" className={styles.mainIcon} />
-        </div>
-    )
+        )
+    }
 }
 
 
-export default Head
+
+function mapStateToProps(state) {
+    const { headConfig } = state.global
+    return { headConfig }
+}
+export default connect(mapStateToProps)(Head)

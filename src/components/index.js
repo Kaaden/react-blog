@@ -1,3 +1,4 @@
 import Head from './components-head'
 import List from './components-list'
-export { Head, List }
+import Navigator from "./components-nav"
+export { Head, List,Navigator }
