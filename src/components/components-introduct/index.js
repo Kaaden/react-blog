@@ -13,7 +13,7 @@ class Introduct extends Component {
         if (!introduct) {
             dispatch({ type: "global/getIntroduct" })
         }
-        if (!tags) {
+        if (!tags.length) {
             dispatch({ type: "global/getTag" })
         }
         dispatch({ type: "global/updateView" })

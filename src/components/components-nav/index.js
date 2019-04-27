@@ -2,11 +2,11 @@ import styles from "./index.css"
 import { Component } from "react"
 import classnames from "classnames"
 import router from 'umi/router';
+import { connect } from "dva"
 let pathItem = "/"
 class Navigtor extends Component {
     state = { list: ["HOME", "ABOUT"], isShow: false }
     componentDidMount() {
-        window.addEventListener("scroll", this.onScroll)
         let url = window.location.hash
         try {
             url = url.split("#")
@@ -14,22 +14,6 @@ class Navigtor extends Component {
 
         } catch (err) {
             pathItem = "/"
-        }
-    }
-    componentWillUnmount() {
-        window.removeEventListener("scroll", this.onScroll)
-    }
-    onScroll = () => {
-        this.changeData()
-    }
-    changeData = () => {
-        const scrollTop = document.documentElement.scrollTop;
-        const headBg = document.getElementById("top-nav")
-        const bgHeight = headBg ? headBg.clientHeight : 0;
-        if (scrollTop >= bgHeight) {
-            this.setState({ isShow: true })
-        } else {
-            this.setState({ isShow: false })
         }
     }
     pathGo = (item) => {
@@ -40,20 +24,25 @@ class Navigtor extends Component {
         if (pathItem !== item) {
             pathItem = item
             router.push(List[item])
+            document.documentElement.scrollTop = 0
         }
     }
     render() {
-        const { list, isShow } = this.state
+        const { isNav } = this.props
+        const { list } = this.state
         return (
-            <div className={classnames([styles.main, { [styles.mainSel]: isShow }])}  >
+            <div className={classnames([styles.main, { [styles.mainSel]: isNav }])}  >
                 <div className={styles.nav}></div>
                 {list.map((item, index) => <div className={styles.navItem} key={index} onClick={() => this.pathGo(item)}>{item}</div>)}
             </div>
         )
     }
 }
+function mapStateToProps(state) {
+    const { isNav } = state.global
+    return { isNav }
+}
 
 
 
-
-export default (Navigtor)
+export default connect(mapStateToProps)(Navigtor)

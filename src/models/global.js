@@ -10,7 +10,11 @@ export default {
     pageList: [],
     hasMore: true,
     introduct: "",
-    tags: []
+    tags: [],
+    isNav: false,
+    aboutImg: [],
+    detail: "",
+    pageindex: 1,
   },
   reducers: {
     save_Config(state, { payload }) {
@@ -26,13 +30,23 @@ export default {
       if (payload.list.length) {
         list = [...list, ...payload.list]
       }
-      return { ...state, pageList: list, hasMore }
+
+      return { ...state, pageList: list, hasMore, pageindex: payload.pageindex }
     },
     save_Introduct(state, { payload }) {
       return { ...state, introduct: payload }
     },
     save_Tag(state, { payload }) {
       return { ...state, tags: payload }
+    },
+    change_Show(state, { payload }) {
+      return { ...state, isNav: payload }
+    },
+    save_Img(state, { payload }) {
+      return { ...state, aboutImg: payload }
+    },
+    save_Detail(state, { payload }) {
+      return { ...state, detail: payload }
     }
   },
   effects: {
@@ -47,11 +61,11 @@ export default {
       }
     },
     * getList({ payload }, { call, put }) {
-      const { data } = yield call(service.request, ({ url: "content", data: { ...payload, pageSize: 10, status: 1 } }))
+      const { data } = yield call(service.request, ({ url: "content", data: { pageindex: payload, pageSize: 10, status: 1 } }))
       if (data) {
         yield put({
           type: "save_List",
-          payload: { list: data.data, hasMore: data.isok }
+          payload: { list: data.data, hasMore: data.isok, pageindex: payload }
         })
       }
     },
@@ -80,6 +94,24 @@ export default {
         if (data && data.isok) {
           window.localStorage.setItem("isView", "1")
         }
+      }
+    },
+    * getPageImg({ _ }, { call, put }) {
+      const { data } = yield call(service.request, ({ url: "findImg" }))
+      if (data && data.isok) {
+        yield put({
+          type: "save_Img",
+          payload: data.data
+        })
+      }
+    },
+    * getDetail({ payload }, { call, put }) {
+      const { data } = yield call(service.request, ({ url: "detail", data: payload }))
+      if (data && data.isok) {
+        yield put({
+          type: "save_Detail",
+          payload: data.data
+        })
       }
     }
 

@@ -5,9 +5,12 @@ import { Tag, Divider, Skeleton, Spin, Icon } from "antd"
 import LazyLoad from 'react-lazyload';
 import placeImg from '../../assets/pic.png'
 import Ellipsis from 'ant-design-pro/lib/Ellipsis';
+import router from 'umi/router';
+let fetch = false
 class List extends Component {
     state = { loading: false, skele: false, pageindex: 1 }
     async componentDidMount() {
+        console.log(1)
         window.addEventListener("scroll", this.onScroll)
         if (!this.props.pageList.length) {
             this.setState({ skele: true })
@@ -20,21 +23,34 @@ class List extends Component {
     }
     getData = async (pageindex) => {
         const { dispatch, hasMore } = this.props
-        if (!hasMore) {
+        if (!hasMore || fetch) {
             return
         }
+        fetch = true
         this.setState({ loading: true })
-        await dispatch({ type: "global/getList", payload: { pageindex } })
-        this.setState({ loading: false, pageindex })
+        await dispatch({ type: "global/getList", payload: pageindex })
+        this.setState({ loading: false })
+        fetch = false
+    }
+    changeData = (scrollTop) => {
+        const { dispatch } = this.props
+        const headBg = document.getElementById("top-nav")
+        const bgHeight = headBg ? headBg.clientHeight : 0;
+        dispatch({ type: "global/change_Show", payload: scrollTop >= bgHeight ? true : false })
     }
     onScroll = (e) => {
         const body = document.documentElement;
         const scrollTop = body.scrollTop;
         const scrollBottom = body.scrollHeight - body.clientHeight;
         if (scrollTop >= scrollBottom) {
-            let { pageindex } = this.state
+            let { pageindex } = this.props
+            console.log(pageindex)
             this.getData(pageindex + 1)
         }
+        this.changeData(scrollTop)
+    }
+    goDetail = (id) => {
+        router.push(`/detail?id=${id}`)
     }
     render() {
         const { skele, loading } = this.state
@@ -44,7 +60,7 @@ class List extends Component {
 
                 <Skeleton active loading={skele}>
                     {pageList.length > 0 && pageList.map((item, index) => (
-                        <div className={styles.mainItem} key={index}>
+                        <div className={styles.mainItem} key={index} onClick={() => this.goDetail(item.id)}>
                             <div className={styles.mainItemContent}>
                                 <Ellipsis length={25} className={styles.mainItemTitle}>{item.title}</Ellipsis>
                                 <Ellipsis length={100} className={styles.mainItemTxt}>{item.description}</Ellipsis>
@@ -71,8 +87,8 @@ class List extends Component {
 }
 
 function mapStateToProps(state) {
-    const { pageList, hasMore } = state.global
-    return { pageList, hasMore }
+    const { pageList, hasMore, pageindex } = state.global
+    return { pageList, hasMore, pageindex }
 }
 
 export default connect(mapStateToProps)(List)
