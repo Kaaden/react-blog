@@ -46,6 +46,7 @@ export default {
       return { ...state, aboutImg: payload }
     },
     save_Detail(state, { payload }) {
+      payload.content = payload.content.replace(/↵/g, "");
       return { ...state, detail: payload }
     }
   },
