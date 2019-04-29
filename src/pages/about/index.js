@@ -1,8 +1,10 @@
 import { connect } from "dva"
 import { Component } from "react"
-import { Head, Navigator, Introduct ,Footer} from "../../components"
+import { Head, Navigator, Introduct, Footer } from "../../components"
 import styles from "./index.css"
 import { Skeleton } from "antd"
+import LazyLoad from 'react-lazyload';
+import placeImg from "../../assets/pic.png"
 class Index extends Component {
     state = { loading: false }
     componentDidMount() {
@@ -34,9 +36,11 @@ class Index extends Component {
                             <div className={styles.desc}>{introduct.dec}</div>
                             <div className={styles.wrap}>
                                 {aboutImg.length > 0 && aboutImg.map((item, index) => (
-                                    <div key={index} className={styles.wrapItem} >
-                                        <img className={styles.wrapItemImg} src={item.img} alt="" />
-                                    </div>
+                                    <LazyLoad key={index} height={200} offset={100}>
+                                        <div className={styles.wrapItem} >
+                                            <img className={styles.wrapItemImg} src={item.img} alt="" onError={(e) => e.target.src = placeImg} />
+                                        </div>
+                                    </LazyLoad>
 
                                 ))}
                             </div>
@@ -44,7 +48,7 @@ class Index extends Component {
                     </Skeleton>
                     <Introduct />
                 </div>
-                <Footer/>
+                <Footer />
             </div >
         )
     }

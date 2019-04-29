@@ -5,6 +5,7 @@ class Index extends Component {
   render() {
     return (
       <div className="container">
+
         <Navigator />
         <Head />
         <div className="container-main">

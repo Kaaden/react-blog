@@ -16,7 +16,6 @@ class Navigtor extends Component {
         }
         try {
             url = url.split("#")
-
             pathItem = routerPage[url[1]]
             this.setState({ path: url[1] })
         } catch (err) {

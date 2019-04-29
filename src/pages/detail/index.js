@@ -32,6 +32,7 @@ class Index extends Component {
           <Navigator />
           <TitleComponents detail={detail} />
           <Skeleton active loading={loading}>
+         
             <div dangerouslySetInnerHTML={{ __html: detail.content }} className={styles.mainHtml}></div>
           </Skeleton>
           <AboutComponents logo={introduct.logo} name={introduct.user} />
