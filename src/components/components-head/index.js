@@ -16,7 +16,7 @@ class Head extends Component {
         const { headConfig } = this.props
         let desc = ""
         let title = "KAADEN"
-        let bg = "http://kaaden.orrzt.com:8080/public/uploads/8c23f4a2b2baf68c6c6c020542696629.jpg"
+        let bg = "http://kaaden.orrzt.com/uploads/8c23f4a2b2baf68c6c6c020542696629.jpg"
         const url = window.location.hash
         if (url === "#/") {
             bg = headConfig.homeurl
