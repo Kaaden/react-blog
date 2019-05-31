@@ -12,8 +12,6 @@ class Index extends Component {
         <Navigator />
         <Head />
         <div className="container-main">
-          <iframe src='https://github.com/login/oauth/authorize\?client_id=a81d2df07a5f4265c4a0' width="300"
-            height="200"></iframe>
           <List />
           <Introduct />
         </div>
